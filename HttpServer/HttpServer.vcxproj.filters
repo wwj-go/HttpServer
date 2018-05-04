@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Thread.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HttpRequest.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpResponse.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultHttpProcessor.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>server</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceThread.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="http">
+      <UniqueIdentifier>{3946353a-3210-4ec6-b177-2bf145b87ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server">
+      <UniqueIdentifier>{0da29143-94f6-46b0-8d91-240bfafcf4ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread">
+      <UniqueIdentifier>{d1b70222-c09f-4b39-bba6-4f05296698d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{5cde81b9-90a1-4d14-9da8-a147073f316a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

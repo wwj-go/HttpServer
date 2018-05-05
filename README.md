@@ -1,6 +1,6 @@
-## A simple http server 
+# A very simple http server 
 
-# Only GET and HEAD are supported now
+## Only GET and HEAD are supported now
 
 ## TOOLs
 ###  IDE：vs2017 installed linux module

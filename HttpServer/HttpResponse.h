@@ -2,10 +2,13 @@
 #include <map>
 #include <string>
 #include "HttpRequest.h"
+#include <iostream>
+#include <fstream>
+#include <signal.h>
 
 using namespace std;
 
-class HttpResponse:HttpRequest 
+class HttpResponse :public HttpRequest
 {
 public:
 	HttpResponse();
@@ -28,13 +31,32 @@ public:
 	}
 
 	void writeHeaders() {
-		string temp="HTTP/1.1 200 OK\r\n";
+		signal(SIGPIPE, SIG_IGN);
+		string temp = "HTTP/1.1 200 OK\r\n";
 		map<string, string>::iterator iter;
 		for (iter = headers.begin(); iter != headers.end(); iter++) {
-			temp.append(iter->first + ":" + iter->second+"\r\n");
+			temp.append(iter->first + ":" + iter->second + "\r\n");
 		}
 		temp.append("\r\n");
-		send(conn,temp.c_str(), temp.length(), 0);
+		send(conn, temp.c_str(), temp.length(), 0);
+	}
+
+	void writeBody(fstream &_file) {
+		char buf[1024];
+		while (true)
+		{
+			signal(SIGPIPE, SIG_IGN);
+			memset(buf, sizeof(buf), 0);
+			_file.read(buf, sizeof(buf));
+			int len = _file.gcount();
+			if (len <= 0)
+				break;
+
+			if (send(conn, buf, len, 0) == -1)
+			{
+				break;
+			}
+		}
 	}
 
 private:

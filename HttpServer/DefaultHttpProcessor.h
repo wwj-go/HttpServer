@@ -16,18 +16,43 @@ public:
 	DefaultHttpProcessor();
 	~DefaultHttpProcessor();
 
-	void doGet(HttpRequest request,HttpResponse response) {
+	void doGet(HttpRequest request, HttpResponse response) {
 		fstream _file;
 		print(request.getHeaders());
-		writeHeader(request, response,_file);
-		if (!_file)
+		writeHeader(request, response, _file);
+		if (_file)
 		{
+			response. writeBody(_file);
+			_file.close();
 		}
-		
 	}
 
-		
+
+	void doHead(HttpRequest request, HttpResponse response) {
+		fstream _file;
+		print(request.getHeaders());
+
+		writeHeader(request, response, _file);
+		if (_file)
+			_file.close();
+	}
+
+	void doPost(HttpRequest request, HttpResponse response) {
+		print(request.getHeaders());
+
+	}
+
+private:
+
 	void writeHeader(HttpRequest request, HttpResponse response, fstream &_file) {
+		/*string uri = request.getUri();
+		string lastChar = uri.substr(uri.length() - 1);
+		if (lastChar=="/")
+		{
+			_file = ;
+			return;
+		}*/
+
 		_file.open(webRoot + request.getUri(), ios::in);
 		if (!_file)
 		{
@@ -39,22 +64,10 @@ public:
 		}
 	}
 
-	void doHead(HttpRequest request, HttpResponse response) {
-		fstream _file;
-		print(request.getHeaders());
-		writeHeader(request, response,_file);
-	}
-
-	void doPost(HttpRequest request, HttpResponse response) {
-
-	}
-
-private:
-
 	void print(map<string, string>dataMap) {
 		map<string, string>::iterator iter;
 		for (iter = dataMap.begin(); iter != dataMap.end(); iter++)
-			cout << iter->first << "  "<< iter->second << endl;
+			cout << iter->first << "  " << iter->second << endl;
 	}
 };
 

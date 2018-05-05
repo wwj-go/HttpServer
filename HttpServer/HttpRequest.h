@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <map>
 #include <string>
 #include "util.h"
@@ -43,7 +43,15 @@ public:
 		requestLine = line;
 		vector<string>vec = split(line, " ");
 		method = vec[0];
-		uri = vec[1];
+		vector<string>temp = split(vec[1], "?");
+		
+
+		//TODO 获得get参数
+		uri = temp[0];
+		if (uri.substr(uri.length()-1)=="/")
+		{
+			uri += "index.html";
+		}
 		protocol = vec[2];
 	}
 
@@ -59,7 +67,7 @@ public:
 		return protocol;
 	}
 
-	protected:
+protected:
 	map<string, string>headers;
 	map<string, string>parameters;
 

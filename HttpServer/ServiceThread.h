@@ -20,6 +20,7 @@ public:
 
 	ServiceThread(int conn) {
 		this->conn = conn;
+		response.setConn(conn);
 	}
 
 	~ServiceThread() {
@@ -35,6 +36,7 @@ public:
 		{
 			read();
 			parse();
+			preDispatch();
 			dispatch();
 		}
 		catch (const std::exception)
@@ -49,11 +51,11 @@ public:
 		{
 			processor.doGet(request, response);
 		}
-		if (request.getMethod() == "HEAD")
+		else if (request.getMethod() == "HEAD")
 		{
 			processor.doHead(request, response);
 		}
-		if (request.getMethod() == "POST")
+		else if (request.getMethod() == "POST")
 		{
 			processor.doPost(request, response);
 		}
@@ -89,6 +91,21 @@ public:
 		}
 	}
 
+	void preDispatch() {
+		char buf[30] = {0};
+		getGmtTime(buf);
+		response.addHeader("Date",string(buf) );
+		response.addHeader("Server", "my_server");
+		response.addHeader("Connection", "Close");
+		response.addHeader("Pragma","no-cache");
+		string  uri = request.getUri();
+		int pos = uri.rfind(".");
+		if (pos!=-1)
+		{
+			string extensionName = uri.substr(pos+1);
+			response.addHeader("Content-Type", getType(extensionName));
+		}
+	}
 
 private:
 	int conn;
